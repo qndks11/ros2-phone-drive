@@ -24,7 +24,7 @@ function App() {
     maxVelocity: settings.maxVelocity,
     maxSteeringAngle: settings.maxSteeringAngle,
     fullLockDegrees: settings.fullLockDegrees,
-    headingDelta: orientation.headingDelta,
+    rollDelta: orientation.rollDelta,
   })
 
   return (
@@ -50,7 +50,7 @@ function App() {
         />
         <SteeringGauge
           steeringAngle={steeringAngle}
-          headingDelta={orientation.headingDelta}
+          rollDelta={orientation.rollDelta}
           needsExplicitPermission={orientation.needsExplicitPermission}
           permissionState={orientation.permissionState}
           onRequestPermission={orientation.requestPermission}

@@ -5,7 +5,7 @@ const ACCEL_TIME_TO_MAX = 2 // seconds to reach maxVelocity from 0 under accel
 const BRAKE_TIME_TO_ZERO = 1 // seconds to reach 0 from maxVelocity under brake
 const COAST_TIME_TO_ZERO = 4 // seconds to coast to 0 with no pedal held
 
-// Owns the accel/brake ramp and yaw-to-steering mapping, and publishes both
+// Owns the accel/brake ramp and roll-to-steering mapping, and publishes both
 // at a fixed rate over ROS. Pedal state and settings are read from refs each
 // frame so the rAF loop can stay mounted for the app's whole lifetime.
 export function useControlLoop({
@@ -15,7 +15,7 @@ export function useControlLoop({
   maxVelocity,
   maxSteeringAngle,
   fullLockDegrees,
-  headingDelta,
+  rollDelta,
 }) {
   const [velocity, setVelocity] = useState(0)
   const [steeringAngle, setSteeringAngle] = useState(0)
@@ -25,8 +25,8 @@ export function useControlLoop({
   const stoppedRef = useRef(false)
   const velocityRef = useRef(0)
 
-  const headingDeltaRef = useRef(headingDelta)
-  headingDeltaRef.current = headingDelta
+  const rollDeltaRef = useRef(rollDelta)
+  rollDeltaRef.current = rollDelta
   const maxVelocityRef = useRef(maxVelocity)
   maxVelocityRef.current = maxVelocity
   const maxSteeringAngleRef = useRef(maxSteeringAngle)
@@ -58,10 +58,10 @@ export function useControlLoop({
       }
 
       const fullLock = fullLockDegreesRef.current || 1
-      const clampedDelta = Math.max(-fullLock, Math.min(fullLock, headingDeltaRef.current))
+      const clampedDelta = Math.max(-fullLock, Math.min(fullLock, rollDeltaRef.current))
       // Positive published steering_angle follows the standard ROS convention
       // (REP103, right-hand rule about z) and means a left turn, while a
-      // positive headingDelta means the phone was rotated clockwise (right),
+      // positive rollDelta means the phone was tilted clockwise (right),
       // so the mapping is inverted here.
       const steering = -(clampedDelta / fullLock) * maxSteeringAngleRef.current
 

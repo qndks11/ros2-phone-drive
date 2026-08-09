@@ -1,10 +1,10 @@
 # ros2-phone-drive
 
 A mobile web app for driving a ROS2 vehicle from a phone: on-screen accelerator/brake
-pedals plus phone-yaw steering, published over [rosbridge](https://github.com/RobotWebTools/rosbridge_suite)
+pedals plus phone-roll steering, published over [rosbridge](https://github.com/RobotWebTools/rosbridge_suite)
 via [roslibjs](https://github.com/RobotWebTools/roslibjs).
 
-- Publishes `std_msgs/Float64` on `/velocity` (accel/brake) and `/steering_angle` (phone yaw).
+- Publishes `std_msgs/Float64` on `/velocity` (accel/brake) and `/steering_angle` (phone roll).
 - Rosbridge URL, max velocity, max steering angle, and steering sensitivity are all
   configurable in-app (persisted to `localStorage`).
 
@@ -50,8 +50,10 @@ you'll need to accept the browser's self-signed certificate warning once.
 3. In Settings, set the Rosbridge URL to `ws://<ROS2-machine-IP>:9090` and tap Connect.
 4. Tap **Enable Motion** (iOS only) to grant orientation sensor access, hold the phone
    the way you want "straight ahead" to be, then tap **Calibrate Center**.
-5. Hold the phone in landscape and use the on-screen **BRAKE** / **ACCEL** pedals; yaw
-   (rotate) the phone left/right to steer. The **STOP** button immediately zeroes velocity.
+5. Hold the phone in landscape and use the on-screen **BRAKE** / **ACCEL** pedals; roll
+   (tilt) the phone left/right to steer. Because this is gravity-based tilt rather than
+   compass heading, walking around the vehicle to follow it doesn't shift the steering
+   center. The **STOP** button immediately zeroes velocity.
 
 ### Production build
 

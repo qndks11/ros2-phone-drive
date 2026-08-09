@@ -2,7 +2,7 @@ const RAD_TO_DEG = 180 / Math.PI
 
 export function SteeringGauge({
   steeringAngle,
-  headingDelta,
+  rollDelta,
   needsExplicitPermission,
   permissionState,
   onRequestPermission,
@@ -16,7 +16,7 @@ export function SteeringGauge({
         <div className="steering-gauge__needle" style={{ transform: `rotate(${degrees}deg)` }} />
       </div>
       <div className="steering-gauge__readout">
-        {degrees.toFixed(1)}&deg; steer (yaw {headingDelta.toFixed(1)}&deg;)
+        {degrees.toFixed(1)}&deg; steer (roll {rollDelta.toFixed(1)}&deg;)
       </div>
       <div className="steering-gauge__actions">
         {needsExplicitPermission && permissionState !== 'granted' && (

@@ -60,10 +60,10 @@ export function useControlLoop({
       const fullLock = fullLockDegreesRef.current || 1
       const clampedDelta = Math.max(-fullLock, Math.min(fullLock, rollDeltaRef.current))
       // Positive published steering_angle follows the standard ROS convention
-      // (REP103, right-hand rule about z) and means a left turn, while a
+      // (REP103, right-hand rule about z) and means a left turn, and a
       // positive rollDelta means the phone was tilted clockwise (right),
-      // so the mapping is inverted here.
-      const steering = -(clampedDelta / fullLock) * maxSteeringAngleRef.current
+      // so tilting right maps to a left turn (flipped from the physical tilt).
+      const steering = (clampedDelta / fullLock) * maxSteeringAngleRef.current
 
       sincePublish += dt
       if (sincePublish >= 1 / PUBLISH_HZ) {
